@@ -23,6 +23,7 @@ public class IndexController {
     @GetMapping({ "", "/" })
     public @ResponseBody String index() {
 
+
         return "인덱스 페이지입니다.";
     }
 
