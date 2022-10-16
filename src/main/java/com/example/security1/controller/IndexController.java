@@ -18,8 +18,8 @@ public class IndexController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+//    @Autowired
+//    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping({ "", "/" })
     public @ResponseBody String index() {
@@ -70,8 +70,8 @@ public class IndexController {
     public String joinProc(UserEntity user) {
         System.out.println("회원가입 진행 : " + user);
         String rawPassword = user.getPassword();
-        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-        user.setPassword(encPassword);
+       // String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+        user.setPassword(rawPassword);
         user.setRole("ROLE_USER");
         userRepository.save(user);
         return "redirect:/";

@@ -1,24 +1,42 @@
-//package com.example.security1.config.oauth;
-//
-//@Service
-//public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
-//
-//    @Autowired
-//    private UserRepository userRepository;
-//
-//    // userRequest 는 code를 받아서 accessToken을 응답 받은 객체
-//    @Override
-//    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-//        OAuth2User oAuth2User = super.loadUser(userRequest); // google의 회원 프로필 조회
-//
-//        // code를 통해 구성한 정보
-//        System.out.println("userRequest clientRegistration : " + userRequest.getClientRegistration());
-//        // token을 통해 응답받은 회원정보
-//        System.out.println("oAuth2User : " + oAuth2User);
-//
-//        return processOAuth2User(userRequest, oAuth2User);
-//    }
-//
+package com.example.security1.config.oauth;
+
+import com.example.security1.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.stereotype.Service;
+
+@Service
+public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    // userRequest 는 code를 받아서 accessToken을 응답 받은 객체
+    //구글로 부터 받은 userRequest데이터에 대한 후처리 함수
+    @Override
+    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        System.out.println("ClientRegistration :"+userRequest.getClientRegistration());//이걸로 구글 로그인인걸 파악
+        System.out.println("AccessToken :"+userRequest.getAccessToken().getTokenValue()); //지금 별로 안중요
+        System.out.println("getAttributes :"+super.loadUser(userRequest).getAttributes());
+
+
+        //username=google+id
+        //password=암호화(사실상 상관없음)
+        //email= 구글이메일
+        //role= "ROLE_USER"
+        OAuth2User oAuth2User = super.loadUser(userRequest); // google의 회원 프로필 조회
+
+        // code를 통해 구성한 정보
+        System.out.println("userRequest clientRegistration : " + userRequest.getClientRegistration());
+        // token을 통해 응답받은 회원정보
+        System.out.println("oAuth2User : " + oAuth2User);
+return oAuth2User;
+        //return processOAuth2User(userRequest, oAuth2User);
+    }
+
 //    private OAuth2User processOAuth2User(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
 //
 //        // Attribute를 파싱해서 공통 객체로 묶는다. 관리가 편함.
@@ -61,4 +79,4 @@
 //
 //        return new PrincipalDetails(user, oAuth2User.getAttributes());
 //    }
-//}
+}
