@@ -29,6 +29,8 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	// OAuth2
+	implementation group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.3.5.RELEASE'
 }
 
 tasks.named('test') {
