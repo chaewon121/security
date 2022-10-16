@@ -1,18 +1,21 @@
 package com.example.security1.controller;
 
+import com.example.security1.model.UserEntity;
+import com.example.security1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller //vuew를 리턴
 public class IndexController {
 
-//    @Autowired
-//    private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -62,14 +65,14 @@ public class IndexController {
         return "join";
     }
 
-//    @PostMapping("/joinProc")
-//    public String joinProc(User user) {
-//        System.out.println("회원가입 진행 : " + user);
-//        String rawPassword = user.getPassword();
-//        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-//        user.setPassword(encPassword);
-//        user.setRole("ROLE_USER");
-//        userRepository.save(user);
-//        return "redirect:/";
-//    }
+    @PostMapping("/joinProc")
+    public String joinProc(UserEntity user) {
+        System.out.println("회원가입 진행 : " + user);
+        String rawPassword = user.getPassword();
+        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+        user.setPassword(encPassword);
+        user.setRole("ROLE_USER");
+        userRepository.save(user);
+        return "redirect:/";
+    }
 }
