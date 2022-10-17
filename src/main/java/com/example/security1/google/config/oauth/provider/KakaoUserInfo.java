@@ -25,6 +25,7 @@ public class KakaoUserInfo implements OAuth2UserInfo{
                 email=이메일}
             }
         */
+
         this.attributes = attributes;
         this.attributesAccount = (Map<String, Object>) attributes.get("kakao_account");
         this.attributesProfile = (Map<String, Object>) attributesAccount.get("profile");
