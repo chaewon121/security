@@ -19,6 +19,14 @@ public class IndexController {
 //    @Autowired
 //    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+//    @GetMapping("/member/kakao/callback")
+//    public @ResponseBody String kakao(String code) {
+//
+//        System.out.println("code: "+code);
+//        return "kakao 페이지입니다.";
+//    }
+
+
     @GetMapping({ "", "/" })
     public @ResponseBody String index() {
 
@@ -83,6 +91,7 @@ public class IndexController {
     @PreAuthorize("hasRole('ROLE_MANAGER')or hasRole('ROLE_ADMIN')")
     @GetMapping("/data")
     public @ResponseBody String data() {
+
         return "데이터정보";
     }
 }

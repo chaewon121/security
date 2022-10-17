@@ -6,6 +6,8 @@ package com.example.security1.google.repository;
 import com.example.security1.google.model.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     // Jpa Naming 전략
@@ -16,4 +18,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     // @Query(value = "select * from user", nativeQuery = true)
     // User find마음대로();
+    // SELECT * FROM user WHERE provider = ?1 and providerId = ?2
+    Optional<UserEntity> findByProviderAndProviderId(String provider, String providerId);
 }

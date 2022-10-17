@@ -48,10 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .oauth2Login()
                 .loginPage("/login")
-        //tip. 엑세스토큰, 프로필정보를 한방에 받음
-                //.userInfoEndpoint()
                 .userInfoEndpoint()
                 .userService(principalOauth2UserService);
+
         ; //구글로그인이 완료된 뒤의 후처리가 필요함
 
     }
