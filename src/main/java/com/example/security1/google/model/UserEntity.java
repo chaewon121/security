@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 
@@ -19,7 +16,7 @@ public class UserEntity {
 
     @Id // primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String username;
     private String password;
     private String email;
@@ -40,4 +37,19 @@ public class UserEntity {
         this.providerId = providerId;
         this.createDate = createDate;
     }
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "refreshToken")
+    private RefreshToken jwtRefreshToken;
+
+    /**
+     *  refresh 생성자, setter
+     */
+    public void createRefreshToken(RefreshToken refreshToken) {
+        this.jwtRefreshToken = refreshToken;
+    }
+    public void SetRefreshToken(String refreshToken) {
+        this.jwtRefreshToken.setRefreshToken(refreshToken);
+    }
+
 }

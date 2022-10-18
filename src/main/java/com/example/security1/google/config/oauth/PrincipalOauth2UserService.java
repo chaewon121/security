@@ -2,10 +2,12 @@ package com.example.security1.google.config.oauth;
 
 import com.example.security1.google.config.auth.PrincipalDetails;
 
+//import com.example.security1.google.config.jwt.JwtService;
 import com.example.security1.google.config.oauth.provider.GoogleUserInfo;
 import com.example.security1.google.config.oauth.provider.KakaoUserInfo;
 import com.example.security1.google.config.oauth.provider.NaverUserInfo;
 import com.example.security1.google.config.oauth.provider.OAuth2UserInfo;
+import com.example.security1.google.model.JwtToken;
 import com.example.security1.google.model.UserEntity;
 import com.example.security1.google.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
 
     private final UserRepository userRepository;
+    //private final JwtService jwtService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -87,6 +90,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .build();
             userRepository.save(user);
         }
+
+       //JwtToken jwtTokenDTO = jwtService.joinJwtToken(user.getId());
 
         return new PrincipalDetails(user, oAuth2User.getAttributes());
     }
