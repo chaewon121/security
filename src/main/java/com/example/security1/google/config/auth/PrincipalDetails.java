@@ -74,13 +74,14 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
     @Override
     public String getName() {
+
         return null;
     }
 
     //user의 권한을 리턴하는곳
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> collet = new ArrayList<GrantedAuthority>();
+        Collection<GrantedAuthority> collet = new ArrayList<>();
         collet.add(()->{
             return user.getRole();});
         return collet;

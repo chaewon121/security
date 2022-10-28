@@ -38,18 +38,4 @@ public class UserEntity {
         this.createDate = createDate;
     }
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "refreshToken")
-    private RefreshToken jwtRefreshToken;
-
-    /**
-     *  refresh 생성자, setter
-     */
-    public void createRefreshToken(RefreshToken refreshToken) {
-        this.jwtRefreshToken = refreshToken;
-    }
-    public void SetRefreshToken(String refreshToken) {
-        this.jwtRefreshToken.setRefreshToken(refreshToken);
-    }
-
 }

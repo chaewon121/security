@@ -20,12 +20,12 @@ public class IndexController {
 //    @Autowired
 //    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//    @GetMapping("/member/kakao/callback")
-//    public @ResponseBody String kakao(String code) {
-//
-//        System.out.println("code: "+code);
-//        return "kakao 페이지입니다.";
-//    }
+    @GetMapping("/member/kakao/callback")
+    public @ResponseBody String kakao(String code) {
+
+        System.out.println("code: "+code);
+        return "kakao 페이지입니다.";
+    }
 
 
     @GetMapping({ "", "/" })
@@ -65,6 +65,13 @@ public class IndexController {
     //시큐리티가 이 주소를 낚아채버리네요!
     @GetMapping("/login")
     public String login() {
+
+        return "login";
+    }
+
+    @GetMapping("/oauth2/authorization/kakao")
+    public String login2() {
+
         return "login";
     }
 
