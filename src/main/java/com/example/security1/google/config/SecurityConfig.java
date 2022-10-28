@@ -16,8 +16,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -92,12 +95,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                                         Authentication authentication) throws IOException, ServletException {
                         String token = tokenProvider.create(authentication);
-                        response.addHeader("Authorization", "Bearer " +  token);
+                        //response.addHeader("Authorization", "Bearer " +  token);
                         System.out.println("헤더에 토큰넣어");
-                        String targetUrl = "/";
-                        RequestDispatcher dis = request.getRequestDispatcher(targetUrl);
-                        System.out.println("dis: "+dis);
-                        dis.forward(request, response);
+                        String url = makeRedirectUrl(token);
+                        System.out.println("url: "+url);
+                        RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+                        redirectStrategy.sendRedirect(request, response, url);
+
                     }
                 })
                 .failureHandler(new AuthenticationFailureHandler() {
@@ -109,6 +113,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 });
 
 
+    }
+    private String makeRedirectUrl(String token) {
+        return UriComponentsBuilder.fromUriString("http://localhost:3000/oauth2/kakao?token="+token)
+                .build().toUriString();
     }
 //    @Override
 //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
